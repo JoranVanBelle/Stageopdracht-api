@@ -1,0 +1,16 @@
+server:
+  port: 1083
+
+spring:
+  application:
+    name: API
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Stageopdracht
+    maximum-pool-size: 15
+    password: admin
+    username: user
+
+api:
+  feedback:
+    topic: Kiten.Feedback
+    schemaregistryurl: http://localhost:8081

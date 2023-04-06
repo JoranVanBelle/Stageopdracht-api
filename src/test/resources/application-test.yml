@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql://localhost/mydatabase
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    maximumPoolSize: 15
+    password: user
+    username: admin
+
+api:
+  feedback:
+    topic: Testing

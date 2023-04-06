@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "name": "FeedbackGiven",
+  "namespace": "com.stage",
+  "fields": [
+    {
+      "name": "FeedbackID",
+      "type": "string"
+    },
+    {
+      "name": "Location",
+      "type": "string"
+    },
+    {
+      "name": "Username",
+      "type": "string"
+    },
+    {
+      "name": "Comment",
+      "type": "string"
+    },
+    {
+      "name": "SentAt",
+      "type": "long"
+    }
+  ]
+}
