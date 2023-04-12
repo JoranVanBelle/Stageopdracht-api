@@ -6,11 +6,24 @@ spring:
     name: API
   datasource:
     url: jdbc:postgresql://localhost:5432/Stageopdracht
-    maximum-pool-size: 15
-    password: admin
     username: user
+    password: admin
 
-api:
-  feedback:
+  kafka:
     topic: Kiten.Feedback
-    schemaregistryurl: http://localhost:8081
+    consumer:
+      bootstrapServer: http://localhost:9092
+      specificAvroReaderConfig: true
+      groupId: adapter_mvb
+      autoOffsetReset: earliest
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      schemaRegistry: http://localhost:8081
+
+    producer:
+      bootstrapServer: http://localhost:9092
+      acks: all
+      retries: 0
+      keySerializer: org.apache.kafka.common.serialization.StringSerializer
+      valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      schemaRegistry: http://localhost:8081

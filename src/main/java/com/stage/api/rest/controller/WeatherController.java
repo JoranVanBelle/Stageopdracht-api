@@ -3,7 +3,6 @@ package com.stage.api.rest.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,11 @@ import com.stage.api.rest.service.WeatherService;
 @RequestMapping("/weather")
 public class WeatherController {
 	
-	@Autowired
-	private WeatherService weatherService;
+	private final WeatherService weatherService;
+	
+	public WeatherController(WeatherService weatherService) {
+		this.weatherService = weatherService;
+	}
 	  
 	@GetMapping(value="/locations")
 	public List<String> getLocations() {

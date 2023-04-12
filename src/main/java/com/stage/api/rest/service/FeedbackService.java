@@ -2,18 +2,31 @@ package com.stage.api.rest.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.stage.FeedbackGiven;
 import com.stage.api.rest.entity.Feedback;
+import com.stage.api.rest.infrastructure.FeedbackInfrastructure;
+import com.stage.api.rest.properties.KafkaTopicProperties;
+import com.stage.api.rest.properties.ProducerProperties;
 import com.stage.api.rest.repository.FeedbackRepository;
 
 @Service
 public class FeedbackService {
 	
-	@Autowired
-	private FeedbackRepository feedbackRepository;
+	private final FeedbackRepository feedbackRepository;
+	private final FeedbackInfrastructure feedbackInfrastructure;
+	
+    public FeedbackService(
+    		FeedbackRepository feedbackRepository,
+    		FeedbackInfrastructure feedbackInfrastructure
+    ) {
+        this.feedbackRepository = feedbackRepository;
+        this.feedbackInfrastructure = feedbackInfrastructure;
+    }
 	
 	public List<Feedback> getFeedbackFromLocation(String location) {
 		return feedbackRepository.getFeedbackForLocation(location);
@@ -24,7 +37,7 @@ public class FeedbackService {
 	}
 	
 	public void publishFeedback(String body) {
-		feedbackRepository.publishFeedback(body);
+		feedbackInfrastructure.publishFeedback(body);
 	}
 	
 	public void postFeedbackInDatabase(FeedbackGiven feedback) {

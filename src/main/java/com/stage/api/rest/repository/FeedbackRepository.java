@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -20,17 +14,14 @@ import com.stage.api.rest.entity.Feedback;
 @Repository
 public class FeedbackRepository {
 	
-	@Value("${api.feedback.topic}")
-	private String topic;
+	private final NamedParameterJdbcTemplate jdbcTemplate;
 	
-	@Autowired
-	private NamedParameterJdbcTemplate jdbcTemplate;
-	
-	@Autowired
-	private KafkaProducer<String, FeedbackGiven> producer;
+	public FeedbackRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
 	
 	public List<Feedback> getFeedbackForLocation(String location) {
-		
+
 		List<Feedback> feedback = new ArrayList<>();
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("location", location);
@@ -53,31 +44,6 @@ public class FeedbackRepository {
 		}
 		
 		return feedback;
-	}
-	
-	public void publishFeedback(String body) {
-		try {
-			JSONObject json = new JSONObject(body);
-			JSONObject feedback = json.getJSONObject("feedback");
-			String location = feedback.getString("Location");
-			String username = feedback.getString("Username");
-			String comment = feedback.getString("Comment");
-			int time = feedback.getInt("SentAt");
-			
-			FeedbackGiven fb = new FeedbackGiven();
-			fb.setFeedbackID(String.format("%s%s%s", username, location, time));
-			fb.setLocation(location);
-			fb.setUsername(username);
-			fb.setComment(comment);
-			fb.setSentAt((long) time);
-			
-			final ProducerRecord<String, FeedbackGiven> record = new ProducerRecord<String, FeedbackGiven>(topic, fb.getFeedbackID(), fb);
-			producer.send(record);
-			producer.flush();
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public int postFeedback(FeedbackGiven feedback) {

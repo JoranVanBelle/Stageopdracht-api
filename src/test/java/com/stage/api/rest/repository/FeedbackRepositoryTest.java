@@ -1,6 +1,5 @@
 package com.stage.api.rest.repository;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,14 +65,6 @@ public class FeedbackRepositoryTest {
 		Assertions.assertEquals(2, response.size());
 		Assertions.assertEquals("JoranNieuwpoort1", response.get(0).getFeedbackID());
 		Assertions.assertEquals("LobkeDe Panne1", response.get(1).getFeedbackID());
-	}
-	
-	@Test
-	public void publishFeedbackTest() {		
-		feedbackRepository.publishFeedback(getBody());
-		
-		verify(producer, times(1)).send(any(ProducerRecord.class));
-		verify(producer, times(1)).flush();
 	}
 	
 	@Test

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.stage.api.rest.entity.Weather;
@@ -14,8 +13,11 @@ import com.stage.api.rest.repository.WeatherRepository;
 @Service
 public class WeatherService {
 
-    @Autowired
-    private WeatherRepository weatherRepository;
+    private final WeatherRepository weatherRepository;
+    
+    public WeatherService(WeatherRepository weatherRepository) {
+    	this.weatherRepository = weatherRepository;
+    }
 	
 	public List<String> getLocations() {
 		List<String> locations = new ArrayList<>();

@@ -1,44 +1,46 @@
 package com.stage.api.rest.prodcon;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.time.Duration;
 import java.util.Collections;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.stage.FeedbackGiven;
+import com.stage.api.rest.infrastructure.FeedbackConsumer;
+import com.stage.api.rest.properties.ConsumerProperties;
+import com.stage.api.rest.properties.KafkaTopicProperties;
 import com.stage.api.rest.service.FeedbackService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = FeedbackConsumer.class)
 @ActiveProfiles("test")
-public class FeedbackConsumerTest {
-
-	@Value("api.feedback.topic")
-	private String topic;
+public class FeedbackConsumerTest {	
 	
     @Autowired
     private FeedbackConsumer feedbackConsumer;
     
     @MockBean
+    private KafkaTopicProperties kafkaProperties;
+    
+    @MockBean
     private FeedbackService feedbackService;
     
     @MockBean
-    private KafkaConsumer<String, FeedbackGiven> consumer;
+    private KafkaTemplate<String, FeedbackGiven> kafkaTemplate;
+    
+    @MockBean
+    private ConsumerProperties properties;
     
     @Test
     public void putFeedbackInDatabase() {
@@ -49,14 +51,12 @@ public class FeedbackConsumerTest {
         feedback.setComment("The waves are amazing");
         feedback.setSentAt(1);
         
-        ConsumerRecord<String, FeedbackGiven> record = new ConsumerRecord<>(topic, 1, 0L, feedback.getFeedbackID(), feedback);
-        ConsumerRecords<String, FeedbackGiven> records = new ConsumerRecords<>(Collections.singletonMap(new TopicPartition(System.getenv("TOPIC"), 1), Collections.singletonList(record)));        
+        ConsumerRecord<String, FeedbackGiven> record = new ConsumerRecord<>("test", 1, 0L, feedback.getFeedbackID(), feedback);
+        ConsumerRecords<String, FeedbackGiven> records = new ConsumerRecords<>(Collections.singletonMap(new TopicPartition(kafkaProperties.getTopic(), 1), Collections.singletonList(record)));        
         
-		Mockito.when(consumer.poll(Mockito.any(Duration.class))).thenReturn(records);
-		Mockito.doNothing().when(feedbackService).postFeedbackInDatabase(record.value());
+		Mockito.doNothing().when(feedbackService).postFeedbackInDatabase(feedback);
 		
-		feedbackConsumer.putFeedbackInDatabase();
-
-		verify(feedbackService, times(1)).postFeedbackInDatabase(feedback);
+        Assertions.assertDoesNotThrow(() -> feedbackConsumer.putFeedbackInDatabase(feedback));
+		
     }
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,9 +13,12 @@ import com.stage.api.rest.entity.Weather;
 @Repository
 public class WeatherRepository {
 	
-  @Autowired
-  private NamedParameterJdbcTemplate jdbcTemplate;
+  private final NamedParameterJdbcTemplate jdbcTemplate;
 
+  public WeatherRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+	  this.jdbcTemplate = jdbcTemplate;
+  }
+  
   public List<Weather> getLocations() {
 	
 	List<Weather> weather = new ArrayList<>();

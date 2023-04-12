@@ -17,8 +17,11 @@ import com.stage.api.rest.service.FeedbackService;
 @RequestMapping("/feedback")
 public class FeedbackController {
 	
-	@Autowired
-	private FeedbackService feedbackService;
+	private final FeedbackService feedbackService;
+	
+	public FeedbackController(FeedbackService feedbackService) {
+		this.feedbackService = feedbackService;
+	}
 	  
 	@GetMapping("/{location}")
 	public List<Feedback> getFeedbackLocation(@PathVariable String location) {

@@ -1,11 +1,24 @@
 spring:
+  application:
+    name: API
   datasource:
-    url: jdbc:tc:postgresql://localhost/mydatabase
-    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    maximumPoolSize: 15
-    password: user
-    username: admin
+    url: jdbc:tc:postgresql://localhost:5432/Stageopdracht?TC_INITSCRIPT=populateDatabase.sql
+    username: user
+    password: admin
 
-api:
-  feedback:
-    topic: Testing
+  kafka:
+    topic: testing
+    consumer:
+      specificAvroReaderConfig: true
+      groupId: test
+      autoOffsetReset: earliest
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      schemaRegistry: mock://testUrl
+
+    producer:
+      acks: all
+      retries: 0
+      keySerializer: org.apache.kafka.common.serialization.StringSerializer
+      valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      schemaRegistry: mock://testUrl
