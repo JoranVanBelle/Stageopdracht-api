@@ -5,11 +5,14 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stage.api.rest.entity.Weather;
 import com.stage.api.rest.service.WeatherService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/weather")
@@ -49,5 +52,9 @@ public class WeatherController {
 	@GetMapping(value="/winddirection/{location}")
 	public Map<String, String> getWinddirectionByLocation(@PathVariable String location) {
 		return weatherService.getWinddirectionByLocation(location);
+	}
+	
+	@PostMapping(value="/subscribe")
+	public void postSubscription(@RequestBody String body) {
 	}
 }

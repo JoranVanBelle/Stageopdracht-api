@@ -29,16 +29,10 @@ import com.stage.api.rest.service.FeedbackService;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @ExtendWith(KafkaTestcontainer.class)
-public class FeedbackIntegration {
+public class FeedbackIntegrationTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
-	@Autowired
-	private FeedbackService feedbackService;
-	
-	@Autowired
-	private FeedbackRepository feedbackRepository;
 	
 	@Test
 	public void getAllFeedback() throws Exception {
@@ -96,7 +90,7 @@ public class FeedbackIntegration {
         }
         
         JSONObject first = list.get(0);
-        
+        System.err.println(first);
         Assertions.assertEquals(1, list.size());
         
         Assertions.assertEquals("JoranNieuwpoort1", first.getString("feedbackID"));

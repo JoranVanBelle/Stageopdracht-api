@@ -11,14 +11,14 @@ import com.stage.api.rest.properties.KafkaTopicProperties;
 @Service
 public class FeedbackInfrastructure {
 
-	private final KafkaTemplate<String, FeedbackGiven> kafkaTemplate;
+	private final KafkaTemplate<String, FeedbackGiven> kafkaFeedbackTemplate;
 	private final KafkaTopicProperties kafkaProperties;
 	
 	public FeedbackInfrastructure(
-		KafkaTemplate<String, FeedbackGiven> kafkaTemplate,
+		KafkaTemplate<String, FeedbackGiven> kafkaFeedbackTemplate,
 		KafkaTopicProperties kafkaProperties
 	) {
-		this.kafkaTemplate = kafkaTemplate;
+		this.kafkaFeedbackTemplate = kafkaFeedbackTemplate;
 		this.kafkaProperties = kafkaProperties;
 	}
 	
@@ -26,6 +26,7 @@ public class FeedbackInfrastructure {
 		try {
 			JSONObject json = new JSONObject(body);
 			JSONObject feedback = json.getJSONObject("feedback");
+			
 			String location = feedback.getString("Location");
 			String username = feedback.getString("Username");
 			String comment = feedback.getString("Comment");
@@ -38,7 +39,7 @@ public class FeedbackInfrastructure {
 			fb.setComment(comment);
 			fb.setSentAt((long) time);
 			
-			kafkaTemplate.send(kafkaProperties.getTopic(), fb.getFeedbackID(), fb);
+			kafkaFeedbackTemplate.send(kafkaProperties.getTopicFeedback(), fb.getFeedbackID(), fb);
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

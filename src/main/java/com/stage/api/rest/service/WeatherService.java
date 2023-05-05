@@ -71,5 +71,4 @@ public class WeatherService {
 		
 		return winddirection;		
 	}
-	
 }

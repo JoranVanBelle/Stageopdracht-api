@@ -8,9 +8,13 @@ spring:
     url: jdbc:postgresql://localhost:5432/Stageopdracht
     username: user
     password: admin
+  task:
+    executor:
+      keep-alive: 9223372036854775807s
 
   kafka:
-    topic: Kiten.Feedback
+    topicFeedback: Kiten.Feedback
+    topicSubscription: Kiten.subscription
     consumer:
       bootstrapServer: http://localhost:9092
       specificAvroReaderConfig: true
@@ -27,3 +31,4 @@ spring:
       keySerializer: org.apache.kafka.common.serialization.StringSerializer
       valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       schemaRegistry: http://localhost:8081
+      value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy

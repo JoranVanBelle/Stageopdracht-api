@@ -17,11 +17,8 @@ public class FeedbackConsumer {
 		this.feedbackService = feedbackService;
 	}
 	
-	@KafkaListener(id = "api", topics = "${spring.kafka.topic}")
-	public void putFeedbackInDatabase(FeedbackGiven feedback) {
-		
-//		FeedbackGiven feedback = (FeedbackGiven) SpecificData.get().deepCopy(message.getSchema(), message);
-		
+	@KafkaListener(id = "api.feedback", topics = "Kiten.Feedback")
+	public void putFeedbackInDatabase(FeedbackGiven feedback) {		
 		feedbackService.postFeedbackInDatabase(feedback);
 	}
 }

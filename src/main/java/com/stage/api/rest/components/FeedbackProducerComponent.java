@@ -51,7 +51,7 @@ public class FeedbackProducerComponent {
     }
 
     @Bean
-    public KafkaTemplate<String, FeedbackGiven> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, FeedbackGiven> kafkaFeedbackTemplate(ProducerFactory<String, FeedbackGiven> producerFactory) {
+        return new KafkaTemplate<>(producerFactory);
     }
 }

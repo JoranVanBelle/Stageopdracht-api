@@ -1,9 +1,7 @@
 package com.stage.api.rest.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.kafka.annotation.EnableKafka;
 
-@EnableKafka
 @ConfigurationProperties(prefix="spring.kafka.producer")
 public class ProducerProperties {
 	

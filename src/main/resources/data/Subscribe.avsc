@@ -1,0 +1,48 @@
+[
+	{
+	  "type": "record",
+	  "name": "SubscriptionRegistered",
+	  "namespace": "com.stage",
+	  "fields": [
+	    {
+	      "name": "SubscriptionID",
+	      "type": "string"
+	    },
+	    {
+	      "name": "Location",
+	      "type": "string"
+	    },
+	    {
+	      "name": "Username",
+	      "type": "string"
+	    },
+	    {
+	      "name": "Timestamp",
+	      "type": "long"
+	    }
+	  ]
+	},
+	{
+	  "type": "record",
+	  "name": "SignOutRegistered",
+	  "namespace": "com.stage",
+	  "fields": [
+	    {
+	      "name": "SubscriptionID",
+	      "type": "string"
+	    },
+	    {
+	      "name": "Location",
+	      "type": "string"
+	    },
+	    {
+	      "name": "Username",
+	      "type": "string"
+	    },
+	    {
+	      "name": "Timestamp",
+	      "type": "long"
+	    }
+	  ]
+	}
+]

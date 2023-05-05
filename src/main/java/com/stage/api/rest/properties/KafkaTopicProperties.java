@@ -4,13 +4,22 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix="spring.kafka")
 public class KafkaTopicProperties {
-	private String topic;
+	private String topicFeedback;
+	private String topicSubscription;
 
-	public String getTopic() {
-		return topic;
+	public String getTopicFeedback() {
+		return topicFeedback;
 	}
 
-	public void setTopic(String topic) {
-		this.topic = topic;
+	public void setTopicFeedback(String topicFeedback) {
+		this.topicFeedback = topicFeedback;
+	}
+	
+	public String getTopicSubscription() {
+		return topicSubscription;
+	}
+	
+	public void setTopicSubscription(String topicSubscription) {
+		this.topicSubscription = topicSubscription;
 	}
 }

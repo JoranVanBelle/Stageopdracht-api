@@ -34,8 +34,13 @@ public class KafkaTopicComponent {
     }
     
     @Bean
-    public NewTopic topic() {
-         return new NewTopic(kafkaProperties.getTopic(), 1, (short) 1);
+    public NewTopic topicFeedback() {
+         return new NewTopic(kafkaProperties.getTopicFeedback(), 1, (short) 1);
+    }
+    
+    @Bean
+    public NewTopic topicSubscription() {
+    	return new NewTopic(kafkaProperties.getTopicSubscription(), 1, (short) 1);
     }
 	
 }

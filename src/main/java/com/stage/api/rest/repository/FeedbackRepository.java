@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -53,9 +54,11 @@ public class FeedbackRepository {
 		paramSource.addValue("username", feedback.getUsername());
 		paramSource.addValue("feedback", feedback.getComment());
 		paramSource.addValue("timestamp", feedback.getSentAt());
-		int rowsAffected = jdbcTemplate.update("INSERT INTO Feedback(FeedbackID, Loc, Username, Feedback, TimestampFeedback) VALUES (:feedbackID, :location, :username, :feedback, :timestamp)", paramSource);
-		
-		return rowsAffected;
+		try {
+			return jdbcTemplate.update("INSERT INTO Feedback(FeedbackID, Loc, Username, Feedback, TimestampFeedback) VALUES (:feedbackID, :location, :username, :feedback, :timestamp)", paramSource);
+		} catch(Exception e) {
+			return 0;
+		}
 	}
 	
 	private Feedback createFeedbackObject(Map<String, Object> fb) {

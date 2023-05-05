@@ -22,3 +22,4 @@ spring:
       keySerializer: org.apache.kafka.common.serialization.StringSerializer
       valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       schemaRegistry: mock://testUrl
+      value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy

@@ -52,7 +52,7 @@ public class FeedbackConsumerTest {
         feedback.setSentAt(1);
         
         ConsumerRecord<String, FeedbackGiven> record = new ConsumerRecord<>("test", 1, 0L, feedback.getFeedbackID(), feedback);
-        ConsumerRecords<String, FeedbackGiven> records = new ConsumerRecords<>(Collections.singletonMap(new TopicPartition(kafkaProperties.getTopic(), 1), Collections.singletonList(record)));        
+        ConsumerRecords<String, FeedbackGiven> records = new ConsumerRecords<>(Collections.singletonMap(new TopicPartition(kafkaProperties.getTopicFeedback(), 1), Collections.singletonList(record)));        
         
 		Mockito.doNothing().when(feedbackService).postFeedbackInDatabase(feedback);
 		
