@@ -1,0 +1,36 @@
+server:
+  port: 1083
+
+spring:
+  application:
+    name: API
+  datasource:
+    url: jdbc:postgresql://internship_pgdb:5432/Stageopdracht
+    username: user
+    password: admin
+  task:
+    executor:
+      keep-alive: 9223372036854775807s
+
+  kafka:
+    bootstrap.servers: redpanda:9092
+    schemaRegistry: http://redpanda:8081
+    topicFeedback: Kiten.Feedback
+    topicSubscription: Kiten.subscription
+    consumer:
+      bootstrapServers: redpanda:9092
+      specificAvroReaderConfig: true
+      groupId: adapter_mvb
+      autoOffsetReset: earliest
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      schemaRegistry: http://redpanda:8081
+      
+    producer:
+      bootstrapServers: redpanda:9092
+      acks: all
+      retries: 0
+      keySerializer: org.apache.kafka.common.serialization.StringSerializer
+      valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      schemaRegistry: http://redpanda:8081
+      value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy

@@ -90,7 +90,6 @@ public class FeedbackIntegrationTest {
         }
         
         JSONObject first = list.get(0);
-        System.err.println(first);
         Assertions.assertEquals(1, list.size());
         
         Assertions.assertEquals("JoranNieuwpoort1", first.getString("feedbackID"));
@@ -190,8 +189,6 @@ public class FeedbackIntegrationTest {
 	
 	@Test
 	public void postFeedback_oldLocation() throws Exception {
-		
-		System.out.println(getBodyOldLocation());
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
 				.post("/feedback")
