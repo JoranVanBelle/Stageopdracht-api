@@ -29,7 +29,7 @@ CREATE TABLE Feedback(
  Loc VARCHAR(100) NOT NULL,
  Username VARCHAR(100) NOT NULL,
  Feedback VARCHAR(256) NOT NULL,
- TimestampFeedback INTEGER NOT NULL
+ TimestampFeedback BIGSERIAL NOT NULL
 );
 
 CREATE TABLE keepUpdated (

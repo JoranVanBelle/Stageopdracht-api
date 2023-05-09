@@ -2,7 +2,7 @@
 version: '3.7'
 networks:
   redpanda_network:
-    driver: bridge
+    driver: host
 volumes:
   redpanda: null
   internship_pgdb:
@@ -22,6 +22,8 @@ services:
     depends_on:
       - db
       - redpanda
+    networks:
+      - redpanda_network
 
   redpanda:
     image: docker.redpanda.com/redpandadata/redpanda:v22.3.11

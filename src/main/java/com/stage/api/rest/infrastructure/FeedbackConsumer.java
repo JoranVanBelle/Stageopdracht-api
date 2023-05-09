@@ -18,7 +18,7 @@ public class FeedbackConsumer {
 	}
 	
 	@KafkaListener(id = "api.feedback", topics = "Kiten.Feedback")
-	public void putFeedbackInDatabase(FeedbackGiven feedback) {		
+	public void putFeedbackInDatabase(FeedbackGiven feedback) {
 		feedbackService.postFeedbackInDatabase(feedback);
 	}
 }

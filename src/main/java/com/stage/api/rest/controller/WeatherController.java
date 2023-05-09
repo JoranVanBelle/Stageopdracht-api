@@ -15,7 +15,7 @@ import com.stage.api.rest.service.WeatherService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("/weather")
+@RequestMapping("/api/weather")
 public class WeatherController {
 	
 	private final WeatherService weatherService;

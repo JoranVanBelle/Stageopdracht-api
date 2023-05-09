@@ -38,7 +38,7 @@ public class FeedbackIntegrationTest {
 	public void getAllFeedback() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/feedback")
+				.get("/api/feedback")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -74,7 +74,7 @@ public class FeedbackIntegrationTest {
 	@Test
 	public void getFeedbackByLocation_Nieuwpoort() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/feedback/Nieuwpoort")
+				.get("/api/feedback/Nieuwpoort")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -102,7 +102,7 @@ public class FeedbackIntegrationTest {
 	@Test
 	public void getFeedbackByLocation_DePanne() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/feedback/De Panne")
+				.get("/api/feedback/De Panne")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -131,7 +131,7 @@ public class FeedbackIntegrationTest {
 	@Test
 	public void getFeedbackByLocation_WrongLocation() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/feedback/Kortrijk")
+				.get("/api/feedback/Kortrijk")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -152,7 +152,7 @@ public class FeedbackIntegrationTest {
 	@Test
 	public void postFeedback_newLocation() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/feedback")
+				.post("/api/feedback")
 				.content(getBodyNewLocation())
 				.accept(MediaType.APPLICATION_JSON);
 		
@@ -161,7 +161,7 @@ public class FeedbackIntegrationTest {
 		Thread.sleep(2000);
 		
 		RequestBuilder requestBuilderGet = MockMvcRequestBuilders
-				.get("/feedback/Westende")
+				.get("/api/feedback/Westende")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilderGet).andReturn();
@@ -191,7 +191,7 @@ public class FeedbackIntegrationTest {
 	public void postFeedback_oldLocation() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/feedback")
+				.post("/api/feedback")
 				.content(getBodyOldLocation());
 		
 		mockMvc.perform(requestBuilder);
@@ -199,7 +199,7 @@ public class FeedbackIntegrationTest {
 		Thread.sleep(2000);
 		
 		RequestBuilder requestBuilderGet = MockMvcRequestBuilders
-				.get("/feedback/Nieuwpoort")
+				.get("/api/feedback/Nieuwpoort")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilderGet).andReturn();

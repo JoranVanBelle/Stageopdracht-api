@@ -39,7 +39,7 @@ public class SubscriptionIntegrationTest {
 	@Test
 	public void subscribeToEmails() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/subscription/subscribe")
+				.post("/api/subscription/subscribe")
 				.content(getSubBody())
 				.accept(MediaType.APPLICATION_JSON);
 		
@@ -59,7 +59,7 @@ public class SubscriptionIntegrationTest {
 	public void signoutToEmails() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/subscription/signout")
+				.post("/api/subscription/signout")
 				.content(getSignoutBody())
 				.accept(MediaType.APPLICATION_JSON);
 		

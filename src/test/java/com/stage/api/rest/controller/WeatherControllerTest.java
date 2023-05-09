@@ -42,7 +42,7 @@ class WeatherControllerTest {
 		Mockito.when(weatherService.getLocations()).thenReturn(locations);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/weather/locations").accept(
+				"/api/weather/locations").accept(
 				MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -63,7 +63,7 @@ class WeatherControllerTest {
 		Mockito.when(weatherService.getWeather()).thenReturn(weatherList);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/weather").accept(
+				"/api/weather").accept(
 				MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -81,7 +81,7 @@ class WeatherControllerTest {
 		Mockito.when(weatherService.getWeatherByLocation(Mockito.anyString())).thenReturn(weather);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/weather/Nieuwpoort").accept(
+				"/api/weather/Nieuwpoort").accept(
 				MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -101,7 +101,7 @@ class WeatherControllerTest {
 		Mockito.when(weatherService.getWindspeedByLocation(Mockito.anyString())).thenReturn(windspeed);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/weather/windspeed/Nieuwpoort").accept(
+				"/api/weather/windspeed/Nieuwpoort").accept(
 				MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -122,7 +122,7 @@ class WeatherControllerTest {
 		Mockito.when(weatherService.getWaveheightByLocation(Mockito.anyString())).thenReturn(windspeed);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/weather/waveheight/Nieuwpoort").accept(
+				"/api/weather/waveheight/Nieuwpoort").accept(
 				MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -142,7 +142,7 @@ class WeatherControllerTest {
 		Mockito.when(weatherService.getWinddirectionByLocation(Mockito.anyString())).thenReturn(windspeed);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/weather/winddirection/Nieuwpoort").accept(
+				"/api/weather/winddirection/Nieuwpoort").accept(
 				MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();

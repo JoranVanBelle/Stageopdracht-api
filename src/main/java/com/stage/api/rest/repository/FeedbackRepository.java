@@ -54,6 +54,7 @@ public class FeedbackRepository {
 		paramSource.addValue("username", feedback.getUsername());
 		paramSource.addValue("feedback", feedback.getComment());
 		paramSource.addValue("timestamp", feedback.getSentAt());
+		System.err.println(feedback.getSentAt());
 		try {
 			return jdbcTemplate.update("INSERT INTO Feedback(FeedbackID, Loc, Username, Feedback, TimestampFeedback) VALUES (:feedbackID, :location, :username, :feedback, :timestamp)", paramSource);
 		} catch(Exception e) {

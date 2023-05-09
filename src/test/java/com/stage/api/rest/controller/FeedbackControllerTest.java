@@ -45,11 +45,11 @@ public class FeedbackControllerTest {
 		Mockito.when(feedbackService.getFeedbackFromLocation("De Panne")).thenReturn(feedbackList.stream().filter(elem -> elem.getLocation().equals("De Panne")).collect(Collectors.toList()));
 		
 		RequestBuilder requestBuilderNieuwpoort = MockMvcRequestBuilders
-				.get("/feedback/Nieuwpoort")
+				.get("/api/feedback/Nieuwpoort")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		RequestBuilder requestBuilderDePanne = MockMvcRequestBuilders
-				.get("/feedback/De Panne")
+				.get("/api/feedback/De Panne")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult resultNieuwpoort = mockMvc.perform(requestBuilderNieuwpoort).andReturn();
@@ -73,7 +73,7 @@ public class FeedbackControllerTest {
 		Mockito.when(feedbackService.getFeedback()).thenReturn(feedbackList);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/feedback")
+				.get("/api/feedback")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -86,7 +86,7 @@ public class FeedbackControllerTest {
 	@Test
 	public void postFeedbackTest() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/feedback")
+				.post("/api/feedback")
 				.content(getBody())
 				.accept(MediaType.APPLICATION_JSON);
 		

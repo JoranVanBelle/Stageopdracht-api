@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stage.api.rest.service.SubscriptionService;
 
 @RestController
-@RequestMapping("/subscription")
+@RequestMapping("/api/subscription")
 public class SubscriptionController {
 
 	private final SubscriptionService subService;

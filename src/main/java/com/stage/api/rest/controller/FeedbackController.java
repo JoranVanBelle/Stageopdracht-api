@@ -14,7 +14,7 @@ import com.stage.api.rest.entity.Feedback;
 import com.stage.api.rest.service.FeedbackService;
 
 @RestController
-@RequestMapping("/feedback")
+@RequestMapping("/api/feedback")
 public class FeedbackController {
 	
 	private final FeedbackService feedbackService;

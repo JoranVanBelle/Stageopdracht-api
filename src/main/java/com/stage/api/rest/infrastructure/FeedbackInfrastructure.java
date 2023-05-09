@@ -30,14 +30,14 @@ public class FeedbackInfrastructure {
 			String location = feedback.getString("Location");
 			String username = feedback.getString("Username");
 			String comment = feedback.getString("Comment");
-			int time = feedback.getInt("SentAt");
+			long time = feedback.getLong("SentAt");
 			
 			FeedbackGiven fb = new FeedbackGiven();
 			fb.setFeedbackID(String.format("%s%s%s", username, location, time));
 			fb.setLocation(location);
 			fb.setUsername(username);
 			fb.setComment(comment);
-			fb.setSentAt((long) time);
+			fb.setSentAt(time);
 			
 			kafkaFeedbackTemplate.send(kafkaProperties.getTopicFeedback(), fb.getFeedbackID(), fb);
 			

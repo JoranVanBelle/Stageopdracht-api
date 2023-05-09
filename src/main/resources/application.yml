@@ -8,9 +8,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/Stageopdracht
     username: user
     password: admin
-  task:
-    executor:
-      keep-alive: 9223372036854775807s
+  mvc:
+     async:
+        request-timeout: -1
 
   kafka:
     topicFeedback: Kiten.Feedback

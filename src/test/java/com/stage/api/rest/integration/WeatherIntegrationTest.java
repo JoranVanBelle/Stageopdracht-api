@@ -37,12 +37,13 @@ public class WeatherIntegrationTest {
 	public void getAllWeather() throws Exception {
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather")
+				.get("/api/weather")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
 		String resultString = result.getResponse().getContentAsString();
+		System.err.println(resultString);
 		
 		JSONArray jsonArray = new JSONArray(resultString);
         List<JSONObject> list = new ArrayList<>();
@@ -82,7 +83,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getLocations() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/locations")
+				.get("/api/weather/locations")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -97,7 +98,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getWeatherForLocationTest_Nieuwpoort() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/Nieuwpoort")
+				.get("/api/weather/Nieuwpoort")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -121,7 +122,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getWeatherForLocationTest_DePanne() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/De Panne")
+				.get("/api/weather/De Panne")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -147,7 +148,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getWindspeedTest_Nieuwpoort() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/windspeed/Nieuwpoort")
+				.get("/api/weather/windspeed/Nieuwpoort")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -164,7 +165,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getWindspeedTest_DePanne() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/windspeed/De Panne")
+				.get("/api/weather/windspeed/De Panne")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -181,7 +182,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getWaveheightTest_Nieuwpoort() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/waveheight/Nieuwpoort")
+				.get("/api/weather/waveheight/Nieuwpoort")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -198,7 +199,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getWaveheightTest_DePanne() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/waveheight/De Panne")
+				.get("/api/weather/waveheight/De Panne")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -215,7 +216,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getWinddirectionTest_Nieuwpoort() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/winddirection/Nieuwpoort")
+				.get("/api/weather/winddirection/Nieuwpoort")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -232,7 +233,7 @@ public class WeatherIntegrationTest {
 	@Test
 	public void getWinddirectionTest_DePanne() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/weather/winddirection/De Panne")
+				.get("/api/weather/winddirection/De Panne")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
