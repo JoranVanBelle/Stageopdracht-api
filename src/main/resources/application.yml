@@ -1,34 +1,41 @@
 server:
-  port: 1083
+  port: 5000
+
+springdoc:
+   api-docs:
+      path: /api-docs
+   swagger-ui:
+      path: /swagger-api-docs.html
+      supportedSubmitMethods: ["get"]
 
 spring:
-  application:
-    name: API
-  datasource:
-    url: jdbc:postgresql://localhost:5432/Stageopdracht
-    username: user
-    password: admin
-  mvc:
+   application:
+      name: API
+   datasource:
+      url: jdbc:postgresql://localhost:5432/Stageopdracht
+      username: user
+      password: admin
+   mvc:
      async:
         request-timeout: -1
 
-  kafka:
-    topicFeedback: Kiten.Feedback
-    topicSubscription: Kiten.subscription
-    consumer:
-      bootstrapServer: http://localhost:9092
-      specificAvroReaderConfig: true
-      groupId: adapter_mvb
-      autoOffsetReset: earliest
-      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
-      valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      schemaRegistry: http://localhost:8081
-
-    producer:
-      bootstrapServer: http://localhost:9092
-      acks: all
-      retries: 0
-      keySerializer: org.apache.kafka.common.serialization.StringSerializer
-      valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-      schemaRegistry: http://localhost:8081
-      value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+   kafka:
+      topicFeedback: Kiten.Feedback
+      topicSubscription: Kiten.subscription
+      consumer:
+         bootstrapServer: http://localhost:9092
+         specificAvroReaderConfig: true
+         groupId: adapter_mvb
+         autoOffsetReset: earliest
+         keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+         valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+         schemaRegistry: http://localhost:8081
+      
+      producer:
+         bootstrapServer: http://localhost:9092
+         acks: all
+         retries: 0
+         keySerializer: org.apache.kafka.common.serialization.StringSerializer
+         valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+         schemaRegistry: http://localhost:8081
+         value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy

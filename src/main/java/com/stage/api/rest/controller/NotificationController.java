@@ -16,6 +16,9 @@ import com.stage.api.rest.entity.Weather;
 import com.stage.api.rest.repository.WeatherRepository;
 import com.stage.api.rest.service.NotificationService;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
+@Hidden
 @RestController
 @RequestMapping("/api/notification")
 public class NotificationController {
