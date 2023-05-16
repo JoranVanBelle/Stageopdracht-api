@@ -12,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.stage.SignOutRegistered;
 import com.stage.SubscriptionRegistered;
+import com.stage.api.rest.infrastructure.EmailInfrastructure;
 import com.stage.api.rest.infrastructure.SubscriptionInfrastructure;
 import com.stage.api.rest.repository.SubscriptionRepository;
 
@@ -28,6 +29,9 @@ public class SubscriptionServiceTest {
 	
 	@MockBean
 	private SubscriptionInfrastructure subInfra;
+	
+	@MockBean
+	private EmailInfrastructure emailInfrastructure;
 	
 	@Test
 	public void publicSubscriptionTest() {

@@ -23,3 +23,9 @@ spring:
       valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       schemaRegistry: mock://testUrl
       value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+    
+email:
+   host: localhost
+   port: 3025
+   username: username
+   password: password

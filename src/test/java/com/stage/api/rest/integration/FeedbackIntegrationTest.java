@@ -21,8 +21,6 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.stage.api.rest.extension.KafkaTestcontainer;
-import com.stage.api.rest.repository.FeedbackRepository;
-import com.stage.api.rest.service.FeedbackService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

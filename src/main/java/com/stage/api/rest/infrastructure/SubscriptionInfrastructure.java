@@ -57,7 +57,7 @@ public class SubscriptionInfrastructure {
 			SignOutRegistered sub = new SignOutRegistered();
 			sub.setSubscriptionID(String.format("%s%s%s", username, location, System.currentTimeMillis()));
 			sub.setUsername(username);
-			sub.setLocation(username);
+			sub.setLocation(location);
 			sub.setTimestamp(System.currentTimeMillis());
 			kafkaSignOutTemplate.send(kafkaProperties.getTopicSubscription(), sub.getSubscriptionID(), sub);
 			

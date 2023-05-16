@@ -6,19 +6,18 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.stereotype.Component;
 
-import com.stage.FeedbackGiven;
 import com.stage.SignOutRegistered;
 import com.stage.SubscriptionRegistered;
 import com.stage.api.rest.properties.ProducerProperties;
 
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 
-@Component
+@Configuration
 public class SubscriptionProducerComponent {
 	
 	private final ProducerProperties properties;
@@ -49,6 +48,8 @@ public class SubscriptionProducerComponent {
         configProps.put(
         	AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
         	properties.getSchemaRegistry());
+        configProps.put(ProducerConfig.CLIENT_ID_CONFIG, "subProd");
+        configProps.put("value.subject.name.strategy", properties.getValueSubjectNameStrategy());
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
@@ -74,6 +75,8 @@ public class SubscriptionProducerComponent {
         configProps.put(
         	AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
         	properties.getSchemaRegistry());
+        configProps.put(ProducerConfig.CLIENT_ID_CONFIG, "singOutProd");
+        configProps.put("value.subject.name.strategy", properties.getValueSubjectNameStrategy());
         return new DefaultKafkaProducerFactory<>(configProps);
     }
     

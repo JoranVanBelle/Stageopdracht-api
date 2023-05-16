@@ -16,7 +16,7 @@ services:
     image: api:latest
     restart: always
     ports: 
-      - 1083:1083
+      - 5000:5000
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:

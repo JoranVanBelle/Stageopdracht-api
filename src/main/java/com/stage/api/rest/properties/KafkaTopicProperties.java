@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class KafkaTopicProperties {
 	private String topicFeedback;
 	private String topicSubscription;
+	private String valueSubjectNameStrategy;
 
 	public String getTopicFeedback() {
 		return topicFeedback;
@@ -22,4 +23,13 @@ public class KafkaTopicProperties {
 	public void setTopicSubscription(String topicSubscription) {
 		this.topicSubscription = topicSubscription;
 	}
+
+	public String getValueSubjectNameStrategy() {
+		return valueSubjectNameStrategy;
+	}
+
+	public void setValueSubjectNameStrategy(String valueSubjectNameStrategy) {
+		this.valueSubjectNameStrategy = valueSubjectNameStrategy;
+	}
+	
 }

@@ -1,6 +1,13 @@
 server:
-  port: 1083
+  port: 5000
 
+springdoc:
+   api-docs:
+      path: /api-docs
+   swagger-ui:
+      path: /swagger-api-docs.html
+      supportedSubmitMethods: ["get"]
+      
 spring:
   application:
     name: API
@@ -34,3 +41,9 @@ spring:
       valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       schemaRegistry: http://redpanda:8081
       value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+
+email:
+   host: mailhog
+   port: 1025
+   username: username
+   password: password

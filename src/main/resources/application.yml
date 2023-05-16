@@ -4,9 +4,11 @@ server:
 springdoc:
    api-docs:
       path: /api-docs
+      doc-expansion: none
    swagger-ui:
       path: /swagger-api-docs.html
       supportedSubmitMethods: ["get"]
+      doc-expansion: none
 
 spring:
    application:
@@ -27,6 +29,7 @@ spring:
          specificAvroReaderConfig: true
          groupId: adapter_mvb
          autoOffsetReset: earliest
+         enableAutoCommit: true
          keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
          valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
          schemaRegistry: http://localhost:8081
@@ -38,4 +41,10 @@ spring:
          keySerializer: org.apache.kafka.common.serialization.StringSerializer
          valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
          schemaRegistry: http://localhost:8081
-         value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+         valueSubjectNameStrategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+
+email:
+   host: localhost
+   port: 1025
+   username: username
+   password: password

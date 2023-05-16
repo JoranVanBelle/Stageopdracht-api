@@ -27,6 +27,7 @@ public class SubscriptionRepository {
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("emailaddress", signout.getUsername());
 		paramSource.addValue("location", signout.getLocation());
+		System.err.printf("%s - %s%n", signout.getUsername(), signout.getLocation());
 		return jdbcTemplate.update("DELETE FROM keepUpdated WHERE Location = :location AND Email = :emailaddress", paramSource);
 	}
 	

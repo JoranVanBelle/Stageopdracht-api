@@ -11,6 +11,7 @@ public class ProducerProperties {
 	private String keySerializer;
 	private String valueSerializer;
 	private String schemaRegistry;
+	private String valueSubjectNameStrategy;
 	
 	public String getBootstrapServer() {
 		return bootstrapServer;
@@ -55,7 +56,16 @@ public class ProducerProperties {
 	public String getSchemaRegistry() {
 		return schemaRegistry;
 	}
+	
 	public void setSchemaRegistry(String schemaRegistry) {
 		this.schemaRegistry = schemaRegistry;
+	}
+	
+	public String getValueSubjectNameStrategy() {
+		return valueSubjectNameStrategy;
+	}
+	
+	public void setValueSubjectNameStrategy(String valueSubjectNameStrategy) {
+		this.valueSubjectNameStrategy = valueSubjectNameStrategy;
 	}
 }
