@@ -30,6 +30,13 @@ public class KafkaTopicComponent {
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, prodProperties.getBootstrapServer());
+        configs.put(AdminClientConfig.SECURITY_PROTOCOL_CONFIG, kafkaProperties.getSecurityProtocol());
+        configs.put("sasl.jaas.config", String.format("org.apache.kafka.common.security.plain.PlainLoginModule required username='%s' password='%s'",System.getenv("PLAIN_LOGIN_MODULE_USERNAME"), System.getenv("PLAIN_LOGIN_MODULE_PASSWORD")));
+        configs.put("sasl.mechanism", kafkaProperties.getSaslMechanism());
+        configs.put("client.dns.lookup", kafkaProperties.getClientDnsLookup());
+        configs.put("session.timeout.ms", kafkaProperties.getSessionTimeoutMs());
+        configs.put("basic.auth.credentials.source", kafkaProperties.getBasicAuthCredentialsSource());
+        configs.put("basic.auth.user.info", System.getenv("BASIC_AUTH_USER_INFO"));
         return new KafkaAdmin(configs);
     }
     

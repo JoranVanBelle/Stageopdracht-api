@@ -23,8 +23,8 @@ CREATE TABLE keepUpdated (
     Location VARCHAR(100) NOT NULL
 );
 
-INSERT INTO Kiten(DataID, Loc, Windspeed, WindspeedUnit, waveheight, waveheightUnit, winddirection, winddirectionUnit, TimestampMeasurment) 
-VALUES ('NieuwpoortKiteable1', 'Nieuwpoort', '9.00', 'm/s', '151.00', 'cm', '10.00', 'deg', 1),
-('De PanneKiteable1', 'De Panne', '10.00', 'm/s', '151.00', 'cm', '10.00', 'deg', 1);
-INSERT INTO Feedback(FeedbackID, Loc, Username, Feedback, TimestampFeedback) VALUES ('JoranNieuwpoort1', 'Nieuwpoort', 'Joran', 'The waves are amazing', 1);
-INSERT INTO Feedback(FeedbackID, Loc, Username, Feedback, TimestampFeedback) VALUES ('JoranDe Panne1', 'De Panne', 'Joran', 'There is too little wind here', 1);
+--INSERT INTO Kiten(DataID, Loc, Windspeed, WindspeedUnit, waveheight, waveheightUnit, winddirection, winddirectionUnit, TimestampMeasurment) 
+--VALUES ('NieuwpoortKiteable1', 'Nieuwpoort', '9.00', 'm/s', '151.00', 'cm', '10.00', 'deg', 1),
+--('De PanneKiteable1', 'De Panne', '10.00', 'm/s', '151.00', 'cm', '10.00', 'deg', 1);
+--INSERT INTO Feedback(FeedbackID, Loc, Username, Feedback, TimestampFeedback) VALUES ('JoranNieuwpoort1', 'Nieuwpoort', 'Joran', 'The waves are amazing', 1);
+--INSERT INTO Feedback(FeedbackID, Loc, Username, Feedback, TimestampFeedback) VALUES ('JoranDe Panne1', 'De Panne', 'Joran', 'There is too little wind here', 1);

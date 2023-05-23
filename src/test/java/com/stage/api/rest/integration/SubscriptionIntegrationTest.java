@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.stage.api.rest.extension.KafkaTestcontainer;
+import com.stage.api.rest.infrastructure.EmailInfrastructure;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -36,6 +38,9 @@ public class SubscriptionIntegrationTest {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@MockBean
+	private EmailInfrastructure emailInfrastructure;
+
 	@Test
 	public void subscribeToEmails() throws Exception {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -45,7 +50,7 @@ public class SubscriptionIntegrationTest {
 		
 		mockMvc.perform(requestBuilder).andReturn();
 		
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 		
 		
 		
@@ -58,8 +63,12 @@ public class SubscriptionIntegrationTest {
 	@Test
 	public void signoutToEmails() throws Exception {
 		
+		jdbcTemplate.update("INSERT INTO keepUpdated(SubscriptionID, Email, Location) VALUES('joran.vanbelle2@student.hogent.beNieuwpoort', 'joran.vanbelle2@student.hogent.be', 'Nieuwpoort');");
+		
+		Thread.sleep(2000);
+		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/api/subscription/signout")
+				.delete("/api/subscription/signout")
 				.content(getSignoutBody())
 				.accept(MediaType.APPLICATION_JSON);
 		

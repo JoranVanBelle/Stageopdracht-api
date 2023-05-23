@@ -1,16 +1,20 @@
 package com.stage.api.rest.properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix="spring.kafka.producer")
 public class ProducerProperties {
 	
+	@Value("bootstrap.servers")
 	private String bootstrapServer;
 	private String acks;
 	private int retries;
 	private String keySerializer;
 	private String valueSerializer;
+	@Value("schema-registry")
 	private String schemaRegistry;
+	@Value("value.subject.name.strategy")
 	private String valueSubjectNameStrategy;
 	
 	public String getBootstrapServer() {

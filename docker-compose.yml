@@ -1,8 +1,8 @@
 # Eventhub
 version: '3.7'
 networks:
-  redpanda_network:
-    driver: host
+  redpandaNetwork:
+    driver: bridge
 volumes:
   redpanda: null
   internship_pgdb:
@@ -23,7 +23,7 @@ services:
       - db
       - redpanda
     networks:
-      - redpanda_network
+      - redpandaNetwork
 
   redpanda:
     image: docker.redpanda.com/redpandadata/redpanda:v22.3.11
@@ -45,7 +45,7 @@ services:
     volumes:
       - redpanda:/var/lib/redpanda/data
     networks:
-      - redpanda_network
+      - redpandaNetwork
 
   console:
     image: docker.redpanda.com/redpandadata/console:v2.2.0
@@ -72,14 +72,14 @@ services:
     ports:
       - 8080:8080
     networks:
-      - redpanda_network
+      - redpandaNetwork
     depends_on:
       - redpanda
 
   owl-shop:
     image: quay.io/cloudhut/owl-shop:latest
     networks:
-      - redpanda_network
+      - redpandaNetwork
     restart: always
     environment:
       - SHOP_KAFKA_BROKERS=redpanda:29092
@@ -94,7 +94,7 @@ services:
     hostname: connect
     container_name: internship_connect
     networks:
-      - redpanda_network
+      - redpandaNetwork
     restart: always
     depends_on:
       - redpanda
@@ -143,3 +143,9 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
       - internship_pgadmin:/var/lib/pgadmin
+      
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui

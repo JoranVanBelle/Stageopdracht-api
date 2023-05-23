@@ -1,17 +1,19 @@
 package com.stage.api.rest.properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.kafka.annotation.EnableKafka;
 
 @ConfigurationProperties(prefix="spring.kafka.consumer")
 public class ConsumerProperties {
 
+	@Value("bootstrap.servers")
 	private String bootstrapServer;
 	private String specificAvroReaderConfig;
 	private String groupId;
 	private String autoOffsetReset;
 	private String keyDeserializer;
 	private String valueDeserializer;
+	@Value("schema-registry")
 	private String schemaRegistry;
 	
 	public String getBootstrapServer() {

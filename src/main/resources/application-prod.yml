@@ -9,41 +9,46 @@ springdoc:
       supportedSubmitMethods: ["get"]
       
 spring:
-  application:
-    name: API
-  datasource:
-    url: jdbc:postgresql://internship_pgdb:5432/Stageopdracht
-    username: user
-    password: admin
-  task:
-    executor:
-      keep-alive: 9223372036854775807s
+   application:
+      name: API
+   datasource:
+      url: jdbc:postgresql:///${DATABASE_NAME}?cloudSqlInstance=${DATABASE_INSTANCE_CONNECTION_NAME}&socketFactory=com.google.cloud.sql.postgres.SocketFactory&user=${DATABASE_USERNAME}&password=${DATABASE_PASSWORD}
+      username: ${DATABASE_USERNAME}
+      password: ${DATABASE_PASSWORD}
+   task:
+      executor:
+         keep-alive: 9223372036854775807s
 
-  kafka:
-    bootstrap.servers: redpanda:9092
-    schemaRegistry: http://redpanda:8081
-    topicFeedback: Kiten.Feedback
-    topicSubscription: Kiten.subscription
-    consumer:
-      bootstrapServers: redpanda:9092
-      specificAvroReaderConfig: true
-      groupId: adapter_mvb
-      autoOffsetReset: earliest
-      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
-      valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      schemaRegistry: http://redpanda:8081
+   kafka:
+      bootstrap.servers: pkc-4r297.europe-west1.gcp.confluent.cloud:9092
+      topicFeedback: Kiten.Feedback
+      topicSubscription: Kiten.subscription
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+      client.dns.lookup: use_all_dns_ips
+      session.timeout.ms: 45000
+      basic.auth.credentials.source: USER_INFO
+    
+      consumer:
+         bootstrap.servers: pkc-4r297.europe-west1.gcp.confluent.cloud:9092
+         schema-registry: https://psrc-08kx6.europe-west1.gcp.confluent.cloud
+         specificAvroReaderConfig: true
+         groupId: adapter_mvb
+         autoOffsetReset: earliest
+         keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+         valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       
-    producer:
-      bootstrapServers: redpanda:9092
-      acks: all
-      retries: 0
-      keySerializer: org.apache.kafka.common.serialization.StringSerializer
-      valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-      schemaRegistry: http://redpanda:8081
-      value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+      producer:
+         bootstrap.servers: pkc-4r297.europe-west1.gcp.confluent.cloud:9092
+         schema-registry: https://psrc-08kx6.europe-west1.gcp.confluent.cloud
+         value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+         acks: all
+         retries: 0
+         keySerializer: org.apache.kafka.common.serialization.StringSerializer
+         valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
 
 email:
-   host: mailhog
+   host: https://mailhog-api-d5s73ac6bq-uc.a.run.app
    port: 1025
-   username: username
-   password: password
+   username: notNecessaryForThis
+   password: notNecessaryForThisss

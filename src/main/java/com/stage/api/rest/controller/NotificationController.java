@@ -44,7 +44,6 @@ public class NotificationController {
 		  	                  .id(String.valueOf(i))
 		  	                  .name("Sse weather");
 		  	                emitter.send(event);
-		  	                System.err.println("event sent");
 		  	                Thread.sleep(1000);
 	            	}
 	            }

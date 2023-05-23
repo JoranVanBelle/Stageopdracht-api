@@ -1,5 +1,6 @@
 package com.stage.api.rest.controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class SubscriptionController {
 		subService.publishSubscription(body);
 	}
 	
-	@PostMapping("/signout")
+	@DeleteMapping("/signout")
 	@Operation(description = "To unsubscribe of the emails of a certain location")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "OK"),

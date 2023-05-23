@@ -9,4 +9,4 @@ FROM openjdk:19-jdk
 
 COPY /target/api.rest-0.0.1-SNAPSHOT.jar api.jar
 
-ENTRYPOINT ["java","-jar","/api.jar"]/resources/
+ENTRYPOINT ["java","-jar", "-Dspring.profiles.active=prod", "/api.jar"]

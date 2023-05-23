@@ -31,12 +31,10 @@ public class SubscriptionService {
     
     public void postSubscription(SubscriptionRegistered sub) {
     	int response = subRepository.postSubscription(sub);
-    	System.err.printf("Subscribed: %s%n", response == 1);
     }
     
     public void postSignout(SignOutRegistered signout) {
     	int response = subRepository.deleteSubscription(signout);
-    	System.err.printf("Signed out: %s%n", response == 1);
     }
     
     public void sendSubEmail(SubscriptionRegistered sub) {

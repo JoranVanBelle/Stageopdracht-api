@@ -24,6 +24,12 @@ spring:
    kafka:
       topicFeedback: Kiten.Feedback
       topicSubscription: Kiten.subscription
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+      client.dns.lookup: use_all_dns_ips
+      session.timeout.ms: 45000
+      basic.auth.credentials.source: USER_INFO
+    
       consumer:
          bootstrapServer: http://localhost:9092
          specificAvroReaderConfig: true

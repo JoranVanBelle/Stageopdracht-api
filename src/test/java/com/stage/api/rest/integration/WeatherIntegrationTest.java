@@ -43,7 +43,6 @@ public class WeatherIntegrationTest {
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
 		String resultString = result.getResponse().getContentAsString();
-		System.err.println(resultString);
 		
 		JSONArray jsonArray = new JSONArray(resultString);
         List<JSONObject> list = new ArrayList<>();

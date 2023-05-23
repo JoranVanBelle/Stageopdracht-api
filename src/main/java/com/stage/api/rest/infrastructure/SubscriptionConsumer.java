@@ -25,7 +25,6 @@ public class SubscriptionConsumer {
 		
 		if(record.getSchema().getName().contains("SubscriptionRegistered")) {
 			SubscriptionRegistered sub= (SubscriptionRegistered) SpecificData.get().deepCopy(record.getSchema(), record);
-			System.err.println(sub.getUsername());
 			subscriptionService.postSubscription(sub);
 			subscriptionService.sendSubEmail(sub);
 		} else if(record.getSchema().getName().contains("SignOutRegistered")) {

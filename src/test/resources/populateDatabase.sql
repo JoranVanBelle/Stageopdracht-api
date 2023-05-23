@@ -33,7 +33,8 @@ CREATE TABLE Feedback(
 );
 
 CREATE TABLE keepUpdated (
-	Email VARCHAR (100) PRIMARY KEY,
+	SubscriptionID VARCHAR(200) PRIMARY KEY,
+	Email VARCHAR (100) NOT NULL,
     Location VARCHAR(100) NOT NULL
 );
 
