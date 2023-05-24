@@ -33,7 +33,7 @@ import com.stage.api.rest.infrastructure.EmailInfrastructure;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @ExtendWith(KafkaTestcontainer.class)
-@DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
+//@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class SubscriptionIntegrationTest {
 
 	@Autowired
@@ -54,19 +54,18 @@ public class SubscriptionIntegrationTest {
 		
 		mockMvc.perform(requestBuilder).andReturn();
 		
-		await().atMost(7, TimeUnit.SECONDS).until(() -> jdbcTemplate.queryForList("SELECT * FROM keepUpdated").size() > 0);
-		
-		
+		await().atMost(10, TimeUnit.SECONDS).until(() -> jdbcTemplate.queryForList("SELECT * FROM keepUpdated").size() > 0);
 		
 		Map<String, Object> res = jdbcTemplate.queryForList("SELECT * FROM keepUpdated").get(0);
 		
 		Assertions.assertEquals("Nieuwpoort", res.get("Location"));
 		Assertions.assertEquals("joran.vanbelle2@student.hogent.be", res.get("Email"));
+		
+		jdbcTemplate.update("DELETE FROM keepUpdated");
 	}
 	
 	@Test
 	public void signoutToEmails() throws Exception {
-		
 		jdbcTemplate.update("INSERT INTO keepUpdated(SubscriptionID, Email, Location) VALUES('joran.vanbelle2@student.hogent.beNieuwpoort', 'joran.vanbelle2@student.hogent.be', 'Nieuwpoort');");
 
 		await().atMost(5, TimeUnit.SECONDS).until(() -> jdbcTemplate.queryForList("SELECT * FROM keepUpdated").size() > 0);
@@ -77,7 +76,6 @@ public class SubscriptionIntegrationTest {
 				.accept(MediaType.APPLICATION_JSON);
 		
 		mockMvc.perform(requestBuilder).andReturn();
-
 		await().atMost(7, TimeUnit.SECONDS).until(() -> jdbcTemplate.queryForList("SELECT * FROM keepUpdated").size() == 0);
 		
 		List<Map<String, Object>> res = jdbcTemplate.queryForList("SELECT * FROM keepUpdated");

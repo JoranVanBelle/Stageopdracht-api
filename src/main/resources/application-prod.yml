@@ -22,22 +22,19 @@ spring:
    kafka:
       topicFeedback: Kiten.Feedback
       topicSubscription: Kiten.subscription
+      bootstrap-servers: ${BOOTSTRAP_SERVERS}
       
       properties:
          sasl.mechanism: PLAIN
          bootstrap.servers: ${BOOTSTRAP_SERVERS}
-         sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username=${CLUSTER_API_KEY} password=${CLUSTER_API_SECRET}
+         sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username='${CLUSTER_API_KEY}' password='${CLUSTER_API_SECRET}';"
          security.protocol: SASL_SSL
          session.timeout.ms: 45000
          basic.auth:
             credentials.source: USER_INFO
             user.info: ${SR_API_KEY}:${SR_API_SECRET}
          
-         schema.registry.url: ${SCHEMA_REGISTRY_URL}
-            
-         client.dns.lookup: use_all_dns_ips
-         
-      
+         schema.registry.url: ${SCHEMA_REGISTRY_URL}      
     
       consumer:
          keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
