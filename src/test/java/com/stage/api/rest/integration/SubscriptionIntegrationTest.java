@@ -1,7 +1,11 @@
 package com.stage.api.rest.integration;
 
+import static org.awaitility.Awaitility.await;
+
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,7 +33,7 @@ import com.stage.api.rest.infrastructure.EmailInfrastructure;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @ExtendWith(KafkaTestcontainer.class)
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
 public class SubscriptionIntegrationTest {
 
 	@Autowired
@@ -50,7 +54,7 @@ public class SubscriptionIntegrationTest {
 		
 		mockMvc.perform(requestBuilder).andReturn();
 		
-		Thread.sleep(5000);
+		await().atMost(7, TimeUnit.SECONDS).until(() -> jdbcTemplate.queryForList("SELECT * FROM keepUpdated").size() > 0);
 		
 		
 		
@@ -64,8 +68,8 @@ public class SubscriptionIntegrationTest {
 	public void signoutToEmails() throws Exception {
 		
 		jdbcTemplate.update("INSERT INTO keepUpdated(SubscriptionID, Email, Location) VALUES('joran.vanbelle2@student.hogent.beNieuwpoort', 'joran.vanbelle2@student.hogent.be', 'Nieuwpoort');");
-		
-		Thread.sleep(2000);
+
+		await().atMost(5, TimeUnit.SECONDS).until(() -> jdbcTemplate.queryForList("SELECT * FROM keepUpdated").size() > 0);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
 				.delete("/api/subscription/signout")
@@ -73,8 +77,8 @@ public class SubscriptionIntegrationTest {
 				.accept(MediaType.APPLICATION_JSON);
 		
 		mockMvc.perform(requestBuilder).andReturn();
-		
-		Thread.sleep(7000);
+
+		await().atMost(7, TimeUnit.SECONDS).until(() -> jdbcTemplate.queryForList("SELECT * FROM keepUpdated").size() == 0);
 		
 		List<Map<String, Object>> res = jdbcTemplate.queryForList("SELECT * FROM keepUpdated");
 		
@@ -103,5 +107,11 @@ public class SubscriptionIntegrationTest {
 				    }
 				}
 				""";
+	}
+	
+	private Callable<Boolean> subscriptionIsAdded() {
+		List<Map<String, Object>> res = jdbcTemplate.queryForList("SELECT * FROM keepUpdated");
+		int rowsAffected = res.size();
+		return () -> rowsAffected > 0;
 	}
 }

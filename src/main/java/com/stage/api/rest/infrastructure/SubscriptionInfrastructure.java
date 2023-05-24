@@ -13,17 +13,17 @@ import com.stage.api.rest.properties.KafkaTopicProperties;
 @Service
 public class SubscriptionInfrastructure {
 
-	private final KafkaTemplate<String, SubscriptionRegistered> kafkaSubscriptionTemplate;
-	private final KafkaTemplate<String, SignOutRegistered> kafkaSignOutTemplate;
+	private final KafkaTemplate<String, SubscriptionRegistered> subscriptionKafkaTemplate;
+	private final KafkaTemplate<String, SignOutRegistered> signoutKafkaTemplate;
 	private final KafkaTopicProperties kafkaProperties;
 	
 	public SubscriptionInfrastructure(
-			KafkaTemplate<String, SubscriptionRegistered> kafkaSubscriptionTemplate,
-			KafkaTemplate<String, SignOutRegistered> kafkaSignOutTemplate,
+			KafkaTemplate<String, SubscriptionRegistered> subscriptionKafkaTemplate,
+			KafkaTemplate<String, SignOutRegistered> signoutKafkaTemplate,
 			KafkaTopicProperties kafkaProperties
 	) {
-		this.kafkaSubscriptionTemplate = kafkaSubscriptionTemplate;
-		this.kafkaSignOutTemplate = kafkaSignOutTemplate;
+		this.subscriptionKafkaTemplate = subscriptionKafkaTemplate;
+		this.signoutKafkaTemplate = signoutKafkaTemplate;
 		this.kafkaProperties = kafkaProperties;
 	}
 	
@@ -40,7 +40,7 @@ public class SubscriptionInfrastructure {
 			sub.setLocation(location);
 			sub.setTimestamp(System.currentTimeMillis());
 			
-			kafkaSubscriptionTemplate.send(kafkaProperties.getTopicSubscription(), sub.getSubscriptionID(), sub);
+			subscriptionKafkaTemplate.send(kafkaProperties.getTopicSubscription(), sub.getSubscriptionID(), sub);
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -54,12 +54,12 @@ public class SubscriptionInfrastructure {
 			String location = signout.getString("Location");
 			String username = signout.getString("Username");
 			
-			SignOutRegistered sub = new SignOutRegistered();
-			sub.setSubscriptionID(String.format("%s%s%s", username, location, System.currentTimeMillis()));
-			sub.setUsername(username);
-			sub.setLocation(location);
-			sub.setTimestamp(System.currentTimeMillis());
-			kafkaSignOutTemplate.send(kafkaProperties.getTopicSubscription(), sub.getSubscriptionID(), sub);
+			SignOutRegistered signoutRegistered = new SignOutRegistered();
+			signoutRegistered.setSubscriptionID(String.format("%s%s%s", username, location, System.currentTimeMillis()));
+			signoutRegistered.setUsername(username);
+			signoutRegistered.setLocation(location);
+			signoutRegistered.setTimestamp(System.currentTimeMillis());
+			signoutKafkaTemplate.send(kafkaProperties.getTopicSubscription(), signoutRegistered.getSubscriptionID(), signoutRegistered);
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

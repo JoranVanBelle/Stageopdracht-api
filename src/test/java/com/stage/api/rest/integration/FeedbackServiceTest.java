@@ -1,4 +1,4 @@
-package com.stage.api.rest.service;
+package com.stage.api.rest.integration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,14 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.stage.FeedbackGiven;
-import com.stage.api.rest.components.FeedbackProducerComponent;
 import com.stage.api.rest.entity.Feedback;
 import com.stage.api.rest.infrastructure.FeedbackInfrastructure;
 import com.stage.api.rest.repository.FeedbackRepository;
+import com.stage.api.rest.service.FeedbackService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = FeedbackService.class)

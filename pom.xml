@@ -164,6 +164,17 @@
 		    <version>1.18.0</version>
 		    <scope>test</scope>
 		</dependency>
+		<dependency>
+		    <groupId>io.strimzi</groupId>
+		    <artifactId>strimzi-test-container</artifactId>
+		    <version>0.102.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.awaitility</groupId>
+		    <artifactId>awaitility</artifactId>
+		    <version>4.2.0</version>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -1,7 +1,12 @@
 package com.stage.api.rest.integration;
 
+import static org.awaitility.Awaitility.await;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,10 +35,14 @@ import com.stage.api.rest.extension.KafkaTestcontainer;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @ExtendWith(KafkaTestcontainer.class)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class FeedbackIntegrationTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 	
 	@Test
 	public void getAllFeedback() throws Exception {
@@ -156,7 +168,7 @@ public class FeedbackIntegrationTest {
 		
 		mockMvc.perform(requestBuilder).andReturn();
 		
-		Thread.sleep(2000);
+		await().atMost(5, TimeUnit.SECONDS).until(feedbackIsAdded());
 		
 		RequestBuilder requestBuilderGet = MockMvcRequestBuilders
 				.get("/api/feedback/Westende")
@@ -172,6 +184,7 @@ public class FeedbackIntegrationTest {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             list.add(jsonObject);
+            System.err.println(jsonObject);
         }
         
         JSONObject first = list.get(0);
@@ -193,8 +206,8 @@ public class FeedbackIntegrationTest {
 				.content(getBodyOldLocation());
 		
 		mockMvc.perform(requestBuilder);
-		
-		Thread.sleep(2000);
+
+		await().atMost(5, TimeUnit.SECONDS).until(feedbackIsAdded());
 		
 		RequestBuilder requestBuilderGet = MockMvcRequestBuilders
 				.get("/api/feedback/Nieuwpoort")
@@ -256,6 +269,12 @@ public class FeedbackIntegrationTest {
 				    }
 				}
 				""";
+	}
+	
+	private Callable<Boolean> feedbackIsAdded() {
+		List<Map<String, Object>> res = jdbcTemplate.queryForList("SELECT * FROM Feedback");
+		int rowsAffected = res.size();
+		return () -> rowsAffected > 0;
 	}
 	
 }

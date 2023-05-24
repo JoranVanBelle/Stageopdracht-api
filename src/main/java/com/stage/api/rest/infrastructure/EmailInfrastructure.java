@@ -102,7 +102,7 @@ public class EmailInfrastructure {
 	}
 	
 	public static String getSignOutText(String location) {
-		return String.format("You won't receive any emails of %s anymore.%nIf you want to receive email again, you can subscribe again inside the app.", location);
+		return String.format("You won't receive any emails of %s anymore.\r\nIf you want to receive email again, you can subscribe again inside the app.", location);
 	}
 }
 

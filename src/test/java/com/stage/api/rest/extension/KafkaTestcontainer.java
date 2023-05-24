@@ -1,20 +1,32 @@
 package com.stage.api.rest.extension;
 
+import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.testcontainers.containers.KafkaContainer;
-import org.testcontainers.utility.DockerImageName;
 
-public class KafkaTestcontainer implements BeforeAllCallback {
+import io.strimzi.test.container.StrimziKafkaContainer;
+
+public class KafkaTestcontainer implements BeforeAllCallback, AfterAllCallback {
+	
+	private StrimziKafkaContainer strimziKafkaContainer;
 	
 	@Override
 	public void beforeAll(ExtensionContext context) throws Exception {
-		KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:6.2.1"));
 		
-		kafka.start();
+		strimziKafkaContainer = new StrimziKafkaContainer()
+		        .withBootstrapServers(container -> String.format("PLAINTEXT://%s:%s", container.getHost(), container.getMappedPort(9092)))
+		        .withPort(9092)
+		        .waitForRunning();
 		
-		System.setProperty("spring.kafka.consumer.bootstrapServer", kafka.getBootstrapServers());
-		System.setProperty("spring.kafka.producer.bootstrapServer", kafka.getBootstrapServers());
+		strimziKafkaContainer.start();
 	}
 
+	@Override
+	public void afterAll(ExtensionContext context) throws Exception {
+		// TODO Auto-generated method stub
+		strimziKafkaContainer.close();
+	}
+	
+	
 }

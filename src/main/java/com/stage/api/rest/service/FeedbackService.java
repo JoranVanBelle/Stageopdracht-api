@@ -2,16 +2,11 @@ package com.stage.api.rest.service;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.stage.FeedbackGiven;
 import com.stage.api.rest.entity.Feedback;
 import com.stage.api.rest.infrastructure.FeedbackInfrastructure;
-import com.stage.api.rest.properties.KafkaTopicProperties;
-import com.stage.api.rest.properties.ProducerProperties;
 import com.stage.api.rest.repository.FeedbackRepository;
 
 @Service

@@ -18,7 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.stage.FeedbackGiven;
 import com.stage.api.rest.infrastructure.FeedbackConsumer;
-import com.stage.api.rest.properties.ConsumerProperties;
 import com.stage.api.rest.properties.KafkaTopicProperties;
 import com.stage.api.rest.service.FeedbackService;
 
@@ -38,9 +37,6 @@ public class FeedbackConsumerTest {
     
     @MockBean
     private KafkaTemplate<String, FeedbackGiven> kafkaTemplate;
-    
-    @MockBean
-    private ConsumerProperties properties;
     
     @Test
     public void putFeedbackInDatabase() {

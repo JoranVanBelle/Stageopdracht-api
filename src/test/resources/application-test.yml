@@ -5,24 +5,29 @@ spring:
     url: jdbc:tc:postgresql://localhost:5432/Stageopdracht?TC_INITSCRIPT=populateDatabase.sql
     username: user
     password: admin
-
+  
   kafka:
-    topic: testing
+    bootstrap-servers: localhost:9092
+    
+    properties:
+       schema.registry.url: mock://testUrl
+       security.protocol: PLAINTEXT
+    
     consumer:
-      specificAvroReaderConfig: true
-      groupId: test
-      autoOffsetReset: earliest
       keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
       valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      schemaRegistry: mock://testUrl
+      
+      groupId: test
+      specificAvroReaderConfig: true
+      autoOffsetReset: earliest
 
     producer:
-      acks: all
-      retries: 0
       keySerializer: org.apache.kafka.common.serialization.StringSerializer
       valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-      schemaRegistry: mock://testUrl
       value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+      
+      acks: all
+      retries: 0
     
 email:
    host: localhost

@@ -1,8 +1,12 @@
 package com.stage.api.rest.controller;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,64 +18,57 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.stage.api.rest.service.SubscriptionService;
+import com.stage.api.rest.service.PtvService;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(value = SubscriptionController.class)
+@WebMvcTest(value = PtvController.class)
 @ActiveProfiles("test")
-public class SubscriptionControllerTest {
+public class PtvControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private SubscriptionService SubscriptionService;
+	private PtvService ptvService;
 	
 	@Test
-	public void postSubscriptionTest() throws Exception {
+	public void getGeocodingTest() throws Exception {
+		String geoCoding = "This is the geocoding of the place where the treasure is buried";
+		
+		Mockito.when(ptvService.getGeocoding(Mockito.anyString())).thenReturn(geoCoding);
+		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/api/subscription/subscribe")
-				.content(getSubBody())
+				.get("/api/ptv")
+				.content("https://url/to/ptv.com")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
 		Assertions.assertEquals(200, result.getResponse().getStatus());
+		Assertions.assertEquals(geoCoding, result.getResponse().getContentAsString());
 	}
 	
 	@Test
-	public void postSignoutTest() throws Exception {
+	public void getGeocodingTwiceTest() throws Exception {
+		String geoCoding = "This is the geocoding of the place where the treasure is buried";
+		
+		Mockito.when(ptvService.getGeocoding(Mockito.anyString())).thenReturn(geoCoding);
+		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.delete("/api/subscription/signout")
-				.content(getSignoutBody())
+				.get("/api/ptv")
+				.content("https://url/to/ptv.com")
 				.accept(MediaType.APPLICATION_JSON);
 		
+		Thread.sleep(1000);
+
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MvcResult result2 = mockMvc.perform(requestBuilder).andReturn();
 		
 		Assertions.assertEquals(200, result.getResponse().getStatus());
+		Assertions.assertEquals(geoCoding, result.getResponse().getContentAsString());
+		
+		Assertions.assertEquals(200, result2.getResponse().getStatus());
+		assertThat(result2.getResponse().getContentAsString(), containsString("few seconds"));
 	}
 	
-	private static String getSubBody() {
-		return 
-				"""
-				{
-				    "subscription": {
-				        "Location": "Nieuwpoort",
-				        "Username": "Joran"
-				    }
-				}
-				""";
-	}
-	
-	private static String getSignoutBody() {
-		return 
-				"""
-				{
-				    "signout": {
-				        "Location": "Nieuwpoort",
-				        "Username": "Joran"
-				    }
-				}
-				""";
-	}
 }

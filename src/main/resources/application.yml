@@ -22,32 +22,30 @@ spring:
         request-timeout: -1
 
    kafka:
+      bootstrap-servers: localhost:9092
       topicFeedback: Kiten.Feedback
       topicSubscription: Kiten.subscription
-      security.protocol: SASL_SSL
-      sasl.mechanism: PLAIN
-      client.dns.lookup: use_all_dns_ips
-      session.timeout.ms: 45000
-      basic.auth.credentials.source: USER_INFO
+      
+      properties:      
+         schema.registry.url: http://localhost:8081
+         specific.avro.reader: true
+      
     
       consumer:
-         bootstrapServer: http://localhost:9092
-         specificAvroReaderConfig: true
+         keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+         valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+         
          groupId: adapter_mvb
          autoOffsetReset: earliest
          enableAutoCommit: true
-         keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
-         valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-         schemaRegistry: http://localhost:8081
       
       producer:
-         bootstrapServer: http://localhost:9092
-         acks: all
-         retries: 0
          keySerializer: org.apache.kafka.common.serialization.StringSerializer
          valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-         schemaRegistry: http://localhost:8081
          valueSubjectNameStrategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+         
+         acks: all
+         retries: 0
 
 email:
    host: localhost
