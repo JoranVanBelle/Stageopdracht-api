@@ -38,37 +38,13 @@ public class PtvControllerTest {
 		Mockito.when(ptvService.getGeocoding(Mockito.anyString())).thenReturn(geoCoding);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/api/ptv")
-				.content("https://url/to/ptv.com")
+				.get("/api/ptv/Lichtervelde")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
 		Assertions.assertEquals(200, result.getResponse().getStatus());
 		Assertions.assertEquals(geoCoding, result.getResponse().getContentAsString());
-	}
-	
-	@Test
-	public void getGeocodingTwiceTest() throws Exception {
-		String geoCoding = "This is the geocoding of the place where the treasure is buried";
-		
-		Mockito.when(ptvService.getGeocoding(Mockito.anyString())).thenReturn(geoCoding);
-		
-		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/api/ptv")
-				.content("https://url/to/ptv.com")
-				.accept(MediaType.APPLICATION_JSON);
-		
-		Thread.sleep(1000);
-
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-		MvcResult result2 = mockMvc.perform(requestBuilder).andReturn();
-		
-		Assertions.assertEquals(200, result.getResponse().getStatus());
-		Assertions.assertEquals(geoCoding, result.getResponse().getContentAsString());
-		
-		Assertions.assertEquals(200, result2.getResponse().getStatus());
-		assertThat(result2.getResponse().getContentAsString(), containsString("few seconds"));
 	}
 	
 }

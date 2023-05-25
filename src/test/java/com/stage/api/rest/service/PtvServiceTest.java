@@ -42,16 +42,4 @@ public class PtvServiceTest {
 		
 		Assertions.assertEquals(distanceMatrix, response);
 	}
-	
-	@Test // JSONError
-	public void getDistanceMatrixWrongBodyTest() {
-		String distanceMatrix = "This is the distance matrix from location A to location B";
-		
-		Mockito.when(ptvInfrastructure.getGeocoding(Mockito.anyString())).thenReturn(distanceMatrix);
-		
-		Map<String, String> body = new HashMap<>();
-		body.put("NotAnUrl", "http://url/to/ptv.com");
-		
-		Assertions.assertThrows(JSONException.class, () -> ptvService.getGeocoding(new JSONObject(body).toString()));
-	}
 }

@@ -29,6 +29,7 @@ spring:
       properties:      
          schema.registry.url: http://localhost:8081
          specific.avro.reader: true
+         value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
       
     
       consumer:
@@ -42,13 +43,12 @@ spring:
       producer:
          keySerializer: org.apache.kafka.common.serialization.StringSerializer
          valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-         valueSubjectNameStrategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
          
          acks: all
          retries: 0
 
 email:
    host: localhost
-   port: 1025
+   port: 3025
    username: username
    password: password

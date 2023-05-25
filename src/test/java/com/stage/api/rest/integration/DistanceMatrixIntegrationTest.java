@@ -43,13 +43,9 @@ public class DistanceMatrixIntegrationTest {
 		
 		Mockito.when(distanceMatrixInfrastructure.getDistanceMatrixResponse(Mockito.anyString())).thenReturn(distanceMatrix);
 		
-
-		Map<String, String> body = new HashMap<>();
-		body.put("url", "http://url/to/distanceMatrix.ai");
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/api/distancematrix")
-				.content(new JSONObject(body).toString())
+				.get("/api/distancematrix/0,0/1,1")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();

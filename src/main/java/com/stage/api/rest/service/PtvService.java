@@ -1,6 +1,5 @@
 package com.stage.api.rest.service;
 
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.stage.api.rest.infrastructure.PtvInfrastructure;
@@ -14,9 +13,9 @@ public class PtvService {
 		this.ptvInfrastructure = ptvInfrastructure;
 	}
 	
-	public String getGeocoding(String body) {
+	public String getGeocoding(String location) {
 		
-		String ptvUrl = String.format("%s%s", new JSONObject(body).getString("url"), System.getenv("PTV_API_TOKEN"));
+		String ptvUrl = String.format("https://api.myptv.com/geocoding/v1/locations/by-text?searchText=%s&countryFilter=BE&apiKey=%s", location.replaceAll(" ", "%20"), System.getenv("PTV_API_TOKEN"));
 		
 		return ptvInfrastructure.getGeocoding(ptvUrl);
 	}

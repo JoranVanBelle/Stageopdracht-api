@@ -56,5 +56,5 @@ spring:
 email:
    host: ${EMAIL_HOST}
    port: ${EMAIL_PORT}
-   username: notNecessaryForThis
-   password: notNecessaryForThisss
+   username: ${EMAIL_USERNAME}
+   password: ${EMAIL_PASSWORD}

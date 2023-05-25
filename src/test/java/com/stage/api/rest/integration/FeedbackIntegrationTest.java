@@ -184,7 +184,6 @@ public class FeedbackIntegrationTest {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             list.add(jsonObject);
-            System.err.println(jsonObject);
         }
         
         JSONObject first = list.get(0);

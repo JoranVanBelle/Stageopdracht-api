@@ -36,19 +36,14 @@ public class PtvIntegrationTest {
 	private PtvInfrastructure ptvInfrastructure;
 	
 	@Test
-	public void distanceMatrixIntegrationTest() throws Exception {
+	public void ptvIntegrationTest() throws Exception {
 		
 		String distanceMatrix = "This is the geocode of location A";
 		
 		Mockito.when(ptvInfrastructure.getGeocoding(Mockito.anyString())).thenReturn(distanceMatrix);
 		
-
-		Map<String, String> body = new HashMap<>();
-		body.put("url", "http://url/to/distanceMatrix.ai");
-		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/api/ptv")
-				.content(new JSONObject(body).toString())
+				.get("/api/ptv/Lichtervelde")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();

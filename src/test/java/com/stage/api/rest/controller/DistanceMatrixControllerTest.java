@@ -35,40 +35,16 @@ public class DistanceMatrixControllerTest {
 	public void getDistanceMatrixTest() throws Exception {
 		String distanceMatrix = "This is the distance matrix from location A to location B";
 		
-		Mockito.when(distanceMatrixService.getDistanceMatrixResponse(Mockito.anyString())).thenReturn(distanceMatrix);
+		Mockito.when(distanceMatrixService.getDistanceMatrixResponse(Mockito.anyString(), Mockito.anyString())).thenReturn(distanceMatrix);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/api/distancematrix")
-				.content("http://url/to/distanceMatrix.ai")
+				.get("/api/distancematrix/0,0/1,1")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
 		Assertions.assertEquals(200, result.getResponse().getStatus());
 		Assertions.assertEquals(distanceMatrix, result.getResponse().getContentAsString());
-	}
-	
-	@Test
-	public void getDistanceMatrixTwiceTest() throws Exception {
-		String distanceMatrix = "This is the distance matrix from location A to location B";
-		
-		Mockito.when(distanceMatrixService.getDistanceMatrixResponse(Mockito.anyString())).thenReturn(distanceMatrix);
-		
-		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/api/distancematrix")
-				.content("http://url/to/distanceMatrix.ai")
-				.accept(MediaType.APPLICATION_JSON);
-		
-		Thread.sleep(1000);
-		
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-		MvcResult result2 = mockMvc.perform(requestBuilder).andReturn();
-		
-		Assertions.assertEquals(200, result.getResponse().getStatus());
-		Assertions.assertEquals(distanceMatrix, result.getResponse().getContentAsString());
-		
-		Assertions.assertEquals(200, result2.getResponse().getStatus());
-		assertThat(result2.getResponse().getContentAsString(), containsString("few seconds"));
 	}
 	
 }

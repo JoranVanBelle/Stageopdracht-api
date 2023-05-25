@@ -11,7 +11,8 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @SpringBootApplication
 @OpenAPIDefinition(info=@Info(title="KiteFever API", version="1.0", description="The API to get the weather, post and read feedback and subscribe to emails", 
 								contact = @Contact(name = "Joran Van Belle", email = "joran.vanbelle@live.be", url = "https://github.com/JoranVanBelle")), 
-					servers = @Server(url = "http://localhost:5000", description = "Default Server URL for development"))
+					servers = {@Server(url = "http://localhost:5000", description = "Default Server URL for development"), 
+							@Server(url="https://rest-api-d5s73ac6bq-ew.a.run.app", description = "Server URL for production")})
 public class Application {
 
 	public static void main(String[] args) {

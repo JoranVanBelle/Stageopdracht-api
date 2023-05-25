@@ -34,24 +34,9 @@ public class DistanceMatrixServiceTest {
 		
 		Mockito.when(distanceMatrixInfrastructure.getDistanceMatrixResponse(Mockito.anyString())).thenReturn(distanceMatrix);
 		
-		Map<String, String> body = new HashMap<>();
-		body.put("url", "http://url/to/distanceMatrix.ai");
-		
-		String response = distanceMatrixService.getDistanceMatrixResponse(new JSONObject(body).toString());
+		String response = distanceMatrixService.getDistanceMatrixResponse("0,0", "1,1");
 		
 		Assertions.assertEquals(distanceMatrix, response);
-	}
-	
-	@Test // JSONError
-	public void getDistanceMatrixWrongBodyTest() {
-		String distanceMatrix = "This is the distance matrix from location A to location B";
-		
-		Mockito.when(distanceMatrixInfrastructure.getDistanceMatrixResponse(Mockito.anyString())).thenReturn(distanceMatrix);
-		
-		Map<String, String> body = new HashMap<>();
-		body.put("NotAnUrl", "http://url/to/distanceMatrix.ai");
-		
-		Assertions.assertThrows(JSONException.class, () -> distanceMatrixService.getDistanceMatrixResponse(new JSONObject(body).toString()));
 	}
 	
 }

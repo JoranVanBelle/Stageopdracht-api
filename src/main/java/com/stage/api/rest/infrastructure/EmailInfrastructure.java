@@ -29,11 +29,16 @@ public class EmailInfrastructure {
 		this.emailProperties = emailProperties;
 		
 		prop = new Properties();
-		prop.put("mail.smtp.auth", true);
+//		prop.put("mail.smtp.auth", true);
+//		prop.put("mail.smtp.starttls.enable", "true");
+//		prop.put("mail.smtp.host", emailProperties.getHost());
+//		prop.put("mail.smtp.port", emailProperties.getPort());
+//		prop.put("mail.smtp.ssl.trust", emailProperties.getHost());
+
+		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.smtp.starttls.enable", "true");
 		prop.put("mail.smtp.host", emailProperties.getHost());
 		prop.put("mail.smtp.port", emailProperties.getPort());
-		prop.put("mail.smtp.ssl.trust", emailProperties.getHost());
 	}
 
 	public void sendSubEmail(String location, String email) {
