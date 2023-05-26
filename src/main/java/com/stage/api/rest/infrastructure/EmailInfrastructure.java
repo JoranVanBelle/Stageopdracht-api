@@ -1,4 +1,4 @@
-package com.stage.api.rest.infrastructure;
+	package com.stage.api.rest.infrastructure;
 
 import java.util.Properties;
 
@@ -97,7 +97,7 @@ public class EmailInfrastructure {
 	}
 	
 	public static String getSubText(String location) {
-		return String.format("You are subscribed to %s.%nYou will now receive emails every time the weather is kiteable here. "
+		return String.format("You are subscribed to %s.\r\nYou will now receive emails every time the weather is kiteable here. "
 				+ "If you don't want to receive any emails anymore, you can either unsubscribe through the app or when you receive an email about the weather.", location);
 	}
 	
